@@ -1,0 +1,11 @@
+.input-area {
+	width: 700px;
+	margin: 0 auto;
+	font-size: 22px;
+
+}
+
+.input-area  input{
+	vertical-align : middle;
+
+}

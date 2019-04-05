@@ -1,0 +1,2 @@
+CREATE DATABASE user DEFAULT CHARACTER SET utf8;
+drop db user;
