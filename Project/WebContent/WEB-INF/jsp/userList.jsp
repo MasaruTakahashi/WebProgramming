@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +15,11 @@
 	<div class="bg-dark">
 		<div class="row">
 			<div class="col-sm-6 text-right">
-				<p class="text-light">さん</p>
+				<p class="text-light">${userinfo.name}さん</p>
 			</div>
 			<div class="col-sm-6 text-right">
 				<a
-					href="file:///C:/Users/LIKEIT_STUDENT.DESKTOP-QQASV86.000/Documents/WebProgramming/Mock/login.html"
+					href="loginServlet"
 					class="text-danger mr-3">ログアウト</a>
 			</div>
 		</div>
@@ -71,7 +72,7 @@
 			<div class="col-sm-8"></div>
 
 			<div class="col-sm-2">
-				<button type="button" class="btn btn-secondary btn-block">検索</button>
+				<button type="submit" class="btn btn-secondary btn-block">検索</button>
 			</div>
 
 			<div class="col-sm-2"></div>
