@@ -18,7 +18,7 @@
 			</div>
 			<div class="col-sm-6 text-right">
 				<a
-					href="file:///C:/Users/LIKEIT_STUDENT.DESKTOP-QQASV86.000/Documents/WebProgramming/Mock/login.html"
+					href="LogoutServlet"
 					class="text-danger mr-3">ログアウト</a>
 			</div>
 		</div>

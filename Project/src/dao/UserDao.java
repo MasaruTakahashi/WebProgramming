@@ -50,48 +50,140 @@ public class UserDao {
 
 	}
 
-	  public List<User> findAll() {
-	        Connection conn = null;
-	        List<User> userList = new ArrayList<User>();
+	public List<User> findAll() {
+		Connection conn = null;
+		List<User> userList = new ArrayList<User>();
 
-	        try {
+		try {
 
-	            conn = DBManager.getConnection();
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT id , login_id , name, birth_date, password, create_date, update_date FROM user";
+
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String loginId = rs.getString("login_id");
+				String name = rs.getString("name");
+				Date birthDate = rs.getDate("birth_date");
+				String password = rs.getString("password");
+				String createDate = rs.getString("create_date");
+				String updateDate = rs.getString("update_date");
+				User user = new User(id, loginId, name, birthDate, password, createDate, updateDate);
+				userList.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+
+	public void insert(
+			String login_id, String name, String birth_date,
+			String password) {
+
+		Connection conn = null;
+		try {
+
+			conn = DBManager.getConnection();
+			String sql = "insert into user(login_id , name, birth_date, password, create_date, update_date)"
+					+ "values(?,?,?,?,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			pStmt.setString(1, login_id);
+			pStmt.setString(2, name);
+			pStmt.setString(3, birth_date);
+			pStmt.setString(4, password);
+
+			pStmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				}
+			}
+		}
+	}
+	public User findByloginid(String login_id) {
+		Connection conn = null;
+		try {
+
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT * FROM user WHERE login_id = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, login_id);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			if (!rs.next()) {
+				return null;
+			}
+
+			String loginidDate = rs.getString("login_id");
+			return new User(loginidDate);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+
+	}
+
+	public User get(String login_id) {
+	Connection conn = null;
+	try {
+
+		conn = DBManager.getConnection();
+
+    String sql = "SELECT * FROM EMPLOYEES WHERE login_id =？";
+   PreparedStatement pStmt = conn.prepareStatement（sql）;
+    pStmt.setString(1,login_id);
+    ResultSet rs = pStmt.executeQuery();
+
+    if(rs.next()){
+        User user = new User（String loginId（rs.getInt("login_id"));
+
+		String loginId = rs.getString("login_id");
+		String name = rs.getString("name");
+		Date birthDate = rs.getDate("birth_date");
+		String password = rs.getString("password");
+		String createDate = rs.getString("create_date");
+		String updateDate = rs.getString("update_date");
 
 
-	            String sql = "SELECT id, name, age FROM user";
-
-	            Statement stmt = conn.createStatement();
-	            ResultSet rs = stmt.executeQuery(sql);
-
-	            while (rs.next()) {
-	            	int id = rs.getInt("id");
-	                String loginId = rs.getString("login_id");
-	                String name = rs.getString("name");
-	                Date birthDate = rs.getDate("birth_date");
-	                String password = rs.getString("password");
-	                String createDate = rs.getString("create_date");
-	                String updateDate = rs.getString("update_date");
-	                User user = new User(id, loginId,name,birthDate,password,createDate,updateDate);
-	                userList.add(user);
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            return null;
-	        } finally {
-	            // データベース切断
-	            if (conn != null) {
-	                try {
-	                    conn.close();
-	                } catch (SQLException e) {
-	                    e.printStackTrace();
-	                    return null;
-	                }
-	            }
-	        }
-	        return userList;
-	    }
-
-
+    pStmt.close（）;
 
 }

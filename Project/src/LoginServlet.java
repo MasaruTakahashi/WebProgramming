@@ -15,14 +15,14 @@ import model.User;
 /**
  * Servlet implementation class loginServlet
  */
-@WebServlet("/loginServlet")
-public class loginServlet extends HttpServlet {
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public loginServlet() {
+	public LoginServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -33,7 +33,7 @@ public class loginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Login.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -54,7 +54,7 @@ public class loginServlet extends HttpServlet {
 		if (user == null) {
 			request.setAttribute("errMsg", "ログインに失敗しました。");
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Login.jsp");
 			dispatcher.forward(request, response);
 			return;
 
@@ -62,7 +62,7 @@ public class loginServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		session.setAttribute("userinfo", user);
-		response.sendRedirect("userListServlet");
+		response.sendRedirect("UserListServlet");
 
 	}
 

@@ -16,6 +16,9 @@ public class User {
 		this.login_id = login_id;
 		this.name = name;
 	}
+	public User(String login_id) {
+		this.login_id = login_id;
+	}
 
 	public User(
 			int id,String login_id,String name,Date birth_date,

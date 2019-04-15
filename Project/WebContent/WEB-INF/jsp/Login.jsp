@@ -11,7 +11,7 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 <link rel="stylesheet" href="css/common.css">
-<title>login page</title>
+<title>Login page</title>
 </head>
 <body>
 	<div class="container-fluid">
@@ -31,7 +31,7 @@
 	</c:if>
 
 
-			<form action="loginServlet" method="post">
+			<form action="LoginServlet" method="post">
 
 
 				<div class="form-group row">
