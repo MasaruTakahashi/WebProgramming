@@ -37,24 +37,24 @@
 		<div class="input-area">
 		<div class="row">
 		<label for="inputPassword" class="col-sm-4 col-form-label">ログインID</label>
-		<div class="col-sm-8">${userinfo.login_id}</div>
+		<div class="col-sm-8">${userinfo2.login_id}</div>
 		</div>
 
 		<div class="row">
 		<label for="inputPassword" class="col-sm-4 col-form-label">ユーザー名</label>
-		<div class="col-sm-8">${userinfo.name}</div>
+		<div class="col-sm-8">${userinfo2.name}</div>
 		</div>
 		<div class="row">
 		<label for="inputPassword" class="col-sm-4 col-form-label">生年月日</label>
-		<div class="col-sm-8">${userinfo.birth_date}</div>
+		<div class="col-sm-8">${userinfo2.birth_date}</div>
 		</div>
 		<div class="row">
 		<label for="inputPassword" class="col-sm-4 col-form-label">登録日時</label>
-		<div class="col-sm-8">${userinfo.create_date}</div>
+		<div class="col-sm-8">${userinfo2.create_date}</div>
 		</div>
 		<div class="row">
 		<label for="inputPassword" class="col-sm-4 col-form-label">更新日時</label>
-		<div class="col-sm-8">${userinfo.update_date}</div>
+		<div class="col-sm-8">${userinfo2.update_date}</div>
 		</div>
 		</div>
 

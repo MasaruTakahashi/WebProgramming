@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable{
 
 	private int id;
 	private String login_id;
@@ -19,6 +20,13 @@ public class User {
 	public User(String login_id) {
 		this.login_id = login_id;
 	}
+	public User(String login_id, String name,Date birth_date,String create_date, String update_date) {
+		this.login_id = login_id;
+		this.name = name;
+		this.birth_date = birth_date;
+		this.create_date = create_date;
+		this.update_date = update_date;
+	}
 
 	public User(
 			int id,String login_id,String name,Date birth_date,
@@ -32,6 +40,7 @@ public class User {
 		this.update_date = update_date;
 
 	}
+
 
 	public int getId() {
 		return id;

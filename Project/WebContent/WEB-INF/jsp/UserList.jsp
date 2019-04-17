@@ -98,9 +98,9 @@
 						<td>${user.name}</td>
 						<td>${user.birth_date}</td>
 						<td><a class="btn btn-primary"
-							href="UserReferenceServlet"
+							href="UserReferenceServlet?id=${user.id}"
 							role="button">詳細</a> <a class="btn btn-success"
-							href="file:///C:/Users/LIKEIT_STUDENT.DESKTOP-QQASV86.000/Documents/WebProgramming/Mock/userInfoUpdate.html"
+							href="UserInfoUpdateServlet?id=${user.id}"
 							role="button">更新</a> <a class="btn btn-danger"
 							href="file:///C:/Users/LIKEIT_STUDENT.DESKTOP-QQASV86.000/Documents/WebProgramming/Mock/userDelete.html"
 							role="button">削除</a></td>

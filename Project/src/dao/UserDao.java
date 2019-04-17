@@ -126,6 +126,7 @@ public class UserDao {
 			}
 		}
 	}
+
 	public User findByloginid(String login_id) {
 		Connection conn = null;
 		try {
@@ -162,28 +163,74 @@ public class UserDao {
 
 	}
 
-	public User get(String login_id) {
-	Connection conn = null;
-	try {
+	public User findByReference(int id) {
+		Connection conn = null;
+		User user = null;
+		try {
 
-		conn = DBManager.getConnection();
+			conn = DBManager.getConnection();
 
-    String sql = "SELECT * FROM EMPLOYEES WHERE login_id =？";
-   PreparedStatement pStmt = conn.prepareStatement（sql）;
-    pStmt.setString(1,login_id);
-    ResultSet rs = pStmt.executeQuery();
+			String sql = "SELECT * FROM user WHERE id =?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, id);
+			ResultSet rs = pStmt.executeQuery();
 
-    if(rs.next()){
-        User user = new User（String loginId（rs.getInt("login_id"));
+			if (rs.next()) {
+				String loginId = rs.getString("login_id");
+				String name = rs.getString("name");
+				Date birthDate = rs.getDate("birth_date");
+				String createDate = rs.getString("create_date");
+				String updateDate = rs.getString("update_date");
 
-		String loginId = rs.getString("login_id");
-		String name = rs.getString("name");
-		Date birthDate = rs.getDate("birth_date");
-		String password = rs.getString("password");
-		String createDate = rs.getString("create_date");
-		String updateDate = rs.getString("update_date");
+				 user = new User(loginId,name,birthDate,createDate,updateDate);
 
 
-    pStmt.close（）;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return user;
+	}
 
+	 public void update(String password, String name, String birth_date){
+
+	        Connection conn = null;
+	        try {
+	        	conn = DBManager.getConnection();
+	        	String sql = "update into user(password,name,birth_date, update_date) w"
+		        		+ "values(?,?,?,CURRENT_TIMESTAMP)";
+	        	PreparedStatement pStmt = conn.prepareStatement(sql);
+
+	        	pStmt.setString(1, password);
+	        	pStmt.setString(2, name);
+	        	pStmt.setString(3, birth_date);
+
+	        	pStmt.executeUpdate();
+
+	 } catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				}
+			}
+		}
+	}
 }

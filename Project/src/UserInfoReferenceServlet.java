@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.UserDao;
+import model.User;
+
 /**
  * Servlet implementation class userReferenceServlet
  */
@@ -28,6 +31,13 @@ public class UserInfoReferenceServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String id = request.getParameter("id");
+
+		UserDao userdao = new UserDao();
+		User user = userdao.findByReference(Integer.parseInt(id));
+
+		request.setAttribute("userinfo2", user);
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/UserInfoReference.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -36,8 +46,8 @@ public class UserInfoReferenceServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+
 	}
 
 }
