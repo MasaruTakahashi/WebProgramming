@@ -176,13 +176,15 @@ public class UserDao {
 			ResultSet rs = pStmt.executeQuery();
 
 			if (rs.next()) {
+				int Id = rs.getInt("id");
 				String loginId = rs.getString("login_id");
+				String password = rs.getString("password");
 				String name = rs.getString("name");
 				Date birthDate = rs.getDate("birth_date");
 				String createDate = rs.getString("create_date");
 				String updateDate = rs.getString("update_date");
 
-				 user = new User(loginId,name,birthDate,createDate,updateDate);
+				 user = new User(Id, loginId, password,name,birthDate,createDate,updateDate);
 
 
 			}
@@ -203,18 +205,18 @@ public class UserDao {
 		return user;
 	}
 
-	 public void update(String password, String name, String birth_date){
+	 public void update(int id, String password, String name, String birth_date){
 
 	        Connection conn = null;
 	        try {
 	        	conn = DBManager.getConnection();
-	        	String sql = "update into user(password,name,birth_date, update_date) w"
-		        		+ "values(?,?,?,CURRENT_TIMESTAMP)";
+	        	String sql = "update user set password = ?,name = ?,birth_date = ?, update_date=CURRENT_TIMESTAMP where id = ?";
 	        	PreparedStatement pStmt = conn.prepareStatement(sql);
 
 	        	pStmt.setString(1, password);
 	        	pStmt.setString(2, name);
 	        	pStmt.setString(3, birth_date);
+	        	pStmt.setInt(4, id);
 
 	        	pStmt.executeUpdate();
 
@@ -232,5 +234,64 @@ public class UserDao {
 				}
 			}
 		}
+	}
+	 public void updateNopass(int id, String name, String birth_date){
+
+	        Connection conn = null;
+	        try {
+	        	conn = DBManager.getConnection();
+	        	String sql = "update user set name = ?,birth_date = ?, update_date = CURRENT_TIMESTAMP where id = ?";
+
+	        	PreparedStatement pStmt = conn.prepareStatement(sql);
+
+
+	        	pStmt.setString(1, name);
+	        	pStmt.setString(2, birth_date);
+	        	pStmt.setInt(3, id);
+
+	        	pStmt.executeUpdate();
+
+	 } catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				}
+			}
+		}
+	}
+	 public void delete(int id) {
+		Connection conn = null;
+		try {
+			conn = DBManager.getConnection();
+			String sql = "delete from user where id = ?";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1,id);
+
+			pStmt.executeUpdate();
+
+		}catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				}
+			}
+		}
+
+
 	}
 }

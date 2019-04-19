@@ -47,26 +47,47 @@ public class UserInfoUpdateServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String loginId =request.getParameter("login_id");
-		String password =request.getParameter("password");
-		String passwordRe =request.getParameter("passwordRe");
+		request.setCharacterEncoding("UTF-8");
+
+		String id = request.getParameter("id");
+		String password = request.getParameter("password");
+		String passwordRe = request.getParameter("passwordRe");
 		String name = request.getParameter("name");
 		String birth_date = request.getParameter("birth_date");
 
 		UserDao userdao = new UserDao();
 
-		if(password.equals(passwordRe)) {
+		if (!password.equals(passwordRe)) {
 			request.setAttribute("errMsg", "入力された内容は正しくありません。");
+
+			String Id = request.getParameter("id");
+			User user = userdao.findByReference(Integer.parseInt(Id));
+			request.setAttribute("userinfo2", user);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/UserInfoUpdate.jsp");
+			dispatcher.forward(request, response);
+			return;
 		}
 
-		else if(name.equals("")||birth_date.equals("")){
+		else if (name.equals("") || birth_date.equals("")) {
 			request.setAttribute("errMsg", "入力された内容は正しくありません。");
+
+			String Id = request.getParameter("id");
+			User user = userdao.findByReference(Integer.parseInt(Id));
+			request.setAttribute("userinfo2", user);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/UserInfoUpdate.jsp");
+			dispatcher.forward(request, response);
+			return;
 		}
-		else {
-			userdao.update(password, name, birth_date);
+
+		else if (password.equals("")) {
+			userdao.updateNopass(Integer.parseInt(id), name, birth_date);
+			response.sendRedirect("UserListServlet");
+		} else {
+			userdao.update(Integer.parseInt(id), password, name, birth_date);
 			response.sendRedirect("UserListServlet");
 		}
-
 
 	}
 

@@ -97,13 +97,35 @@
 						<th scope="row">${user.login_id}</th>
 						<td>${user.name}</td>
 						<td>${user.birth_date}</td>
-						<td><a class="btn btn-primary"
-							href="UserReferenceServlet?id=${user.id}"
-							role="button">詳細</a> <a class="btn btn-success"
-							href="UserInfoUpdateServlet?id=${user.id}"
-							role="button">更新</a> <a class="btn btn-danger"
-							href="file:///C:/Users/LIKEIT_STUDENT.DESKTOP-QQASV86.000/Documents/WebProgramming/Mock/userDelete.html"
-							role="button">削除</a></td>
+
+						<c:if test="${userinfo.id != 1 and userinfo.id != user.id}">
+							<td><a class="btn btn-primary"
+								href="UserReferenceServlet?id=${user.id}" role="button">詳細</a> <a
+								class="btn btn-success"
+								href="UserInfoUpdateServlet?id=${user.id}" tabindex="-1"
+								role="button" aria-disabled="true">更新</a> <a
+								class="btn btn-danger" href="UserDeleteServlet?id=${user.id}"
+								tabindex="-1" role="button" aria-disabled="true">削除</a></td>
+						</c:if>
+
+
+						<c:if test="${userinfo.id != 1}">
+							<td><a class="btn btn-primary"
+								href="UserReferenceServlet?id=${user.id}" role="button">詳細</a> <a
+								class="btn btn-success"
+								href="UserInfoUpdateServlet?id=${user.id}" role="button">更新</a>
+								<a class="btn btn-danger" href="UserDeleteServlet?id=${user.id}"
+								tabindex="-1" role="button" aria-disabled="true">削除</a></td>
+						</c:if>
+
+						<c:if test="${userinfo.id == 1}">
+							<td><a class="btn btn-primary"
+								href="UserReferenceServlet?id=${user.id}" role="button">詳細</a> <a
+								class="btn btn-success"
+								href="UserInfoUpdateServlet?id=${user.id}" role="button">更新</a>
+								<a class="btn btn-danger" href="UserDeleteServlet?id=${user.id}"
+								role="button">削除</a></td>
+						</c:if>
 					</tr>
 				</c:forEach>
 			</tbody>

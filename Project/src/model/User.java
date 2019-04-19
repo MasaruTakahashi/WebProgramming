@@ -20,12 +20,31 @@ public class User implements Serializable{
 	public User(String login_id) {
 		this.login_id = login_id;
 	}
-	public User(String login_id, String name,Date birth_date,String create_date, String update_date) {
+	public User(int id, String login_id, String password, String name,Date birth_date,String create_date, String update_date) {
+		this.id = id;
 		this.login_id = login_id;
+		this.password = password;
 		this.name = name;
 		this.birth_date = birth_date;
 		this.create_date = create_date;
 		this.update_date = update_date;
+	}
+	public User(int id, String password, String name, Date birth_date) {
+		this.id = id;
+		this.password = password;
+		this.name = name;
+		this.birth_date = birth_date;
+
+	}
+	public User(int id, String name, Date birth_date) {
+		this.id = id;
+		this.name = name;
+		this.birth_date = birth_date;
+
+	}
+	public User(int id) {
+		this.id = id;
+
 	}
 
 	public User(
