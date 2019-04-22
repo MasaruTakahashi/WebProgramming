@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.UserDao;
 import model.User;
@@ -31,6 +32,14 @@ public class UserInfoReferenceServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		HttpSession session = request.getSession();
+		User u = (User)session.getAttribute("userinfo");
+
+		if(u == null) {
+			response.sendRedirect("LoginServlet");
+		}
+		else {
 		String id = request.getParameter("id");
 
 		UserDao userdao = new UserDao();
@@ -40,6 +49,7 @@ public class UserInfoReferenceServlet extends HttpServlet {
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/UserInfoReference.jsp");
 		dispatcher.forward(request, response);
+		}
 	}
 
 	/**

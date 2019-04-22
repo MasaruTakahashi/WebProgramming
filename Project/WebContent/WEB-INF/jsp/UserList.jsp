@@ -35,46 +35,48 @@
 		<div class="text-right">
 			<a href="UserRegistrationServlet" class="text-primary">新規登録</a>
 		</div>
+		<form action="UserListServlet" method="post">
+			<div class="input-area">
 
-		<div class="input-area">
 
 
-			<div class="form-group row">
-				<label for="inputPassword" class="col-sm-4 col-form-label">ログインID</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control">
+				<div class="form-group row">
+					<label for="inputPassword" class="col-sm-4 col-form-label">ログインID</label>
+					<div class="col-sm-8">
+						<input type="text" name="login_id" class="form-control">
+					</div>
 				</div>
+
+				<div class="form-group row">
+					<label for="inputPassword" class="col-sm-4 col-form-label">ユーザー名</label>
+					<div class="col-sm-8">
+						<input type="text" name="name" class="form-control">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="inputPassword" class="col-sm-4 col-form-label">生年月日</label>
+					<div class="col-sm-3">
+						<input type="date" name="birth_dateS" class="form-control">
+					</div>
+					<p class="col-sm-2 text-center">～</p>
+					<div class="col-sm-3">
+						<input type="date" name="birth_dateE" class="form-control">
+					</div>
+				</div>
+
 			</div>
 
 			<div class="form-group row">
-				<label for="inputPassword" class="col-sm-4 col-form-label">ユーザー名</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control">
+				<div class="col-sm-8"></div>
+
+				<div class="col-sm-2">
+					<button type="submit" class="btn btn-secondary btn-block">検索</button>
 				</div>
+
+				<div class="col-sm-2"></div>
 			</div>
-
-			<div class="form-group row">
-				<label for="inputPassword" class="col-sm-4 col-form-label">生年月日</label>
-				<div class="col-sm-3">
-					<input type="date" class="form-control">
-				</div>
-				<p class="col-sm-2 text-center">～</p>
-				<div class="col-sm-3">
-					<input type="date" class="form-control">
-				</div>
-			</div>
-
-		</div>
-
-		<div class="form-group row">
-			<div class="col-sm-8"></div>
-
-			<div class="col-sm-2">
-				<button type="submit" class="btn btn-secondary btn-block">検索</button>
-			</div>
-
-			<div class="col-sm-2"></div>
-		</div>
+		</form>
 
 	</div>
 	<br>
@@ -98,34 +100,41 @@
 						<td>${user.name}</td>
 						<td>${user.birth_date}</td>
 
-						<c:if test="${userinfo.id != 1 and userinfo.id != user.id}">
-							<td><a class="btn btn-primary"
-								href="UserReferenceServlet?id=${user.id}" role="button">詳細</a> <a
-								class="btn btn-success"
-								href="UserInfoUpdateServlet?id=${user.id}" tabindex="-1"
-								role="button" aria-disabled="true">更新</a> <a
-								class="btn btn-danger" href="UserDeleteServlet?id=${user.id}"
-								tabindex="-1" role="button" aria-disabled="true">削除</a></td>
-						</c:if>
+						<c:choose>
 
 
-						<c:if test="${userinfo.id != 1}">
-							<td><a class="btn btn-primary"
-								href="UserReferenceServlet?id=${user.id}" role="button">詳細</a> <a
-								class="btn btn-success"
-								href="UserInfoUpdateServlet?id=${user.id}" role="button">更新</a>
-								<a class="btn btn-danger" href="UserDeleteServlet?id=${user.id}"
-								tabindex="-1" role="button" aria-disabled="true">削除</a></td>
-						</c:if>
+							<c:when
+								test="${userinfo.login_id != 'admin' and userinfo.login_id != user.login_id}">
+								<td><a class="btn btn-primary"
+									href="UserReferenceServlet?id=${user.id}" role="button">詳細</a>
+									<a class="btn btn-success disabled"
+									href="UserInfoUpdateServlet?id=${user.id}" tabindex="-1"
+									role="button" aria-disabled="true">更新</a> <a
+									class="btn btn-danger disabled"
+									href="UserDeleteServlet?id=${user.id}" tabindex="-1"
+									role="button" aria-disabled="true">削除</a></td>
+							</c:when>
 
-						<c:if test="${userinfo.id == 1}">
-							<td><a class="btn btn-primary"
-								href="UserReferenceServlet?id=${user.id}" role="button">詳細</a> <a
-								class="btn btn-success"
-								href="UserInfoUpdateServlet?id=${user.id}" role="button">更新</a>
-								<a class="btn btn-danger" href="UserDeleteServlet?id=${user.id}"
-								role="button">削除</a></td>
-						</c:if>
+
+							<c:when test="${userinfo.login_id != 'admin'}">
+								<td><a class="btn btn-primary"
+									href="UserReferenceServlet?id=${user.id}" role="button">詳細</a>
+									<a class="btn btn-success"
+									href="UserInfoUpdateServlet?id=${user.id}" role="button">更新</a>
+									<a class="btn btn-danger disabled"
+									href="UserDeleteServlet?id=${user.id}" tabindex="-1"
+									role="button" aria-disabled="true">削除</a></td>
+							</c:when>
+
+							<c:when test="${userinfo.login_id == 'admin'}">
+								<td><a class="btn btn-primary"
+									href="UserReferenceServlet?id=${user.id}" role="button">詳細</a>
+									<a class="btn btn-success"
+									href="UserInfoUpdateServlet?id=${user.id}" role="button">更新</a>
+									<a class="btn btn-danger"
+									href="UserDeleteServlet?id=${user.id}" role="button">削除</a></td>
+							</c:when>
+						</c:choose>
 					</tr>
 				</c:forEach>
 			</tbody>

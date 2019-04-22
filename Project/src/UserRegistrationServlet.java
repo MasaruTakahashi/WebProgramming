@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.UserDao;
 import model.User;
@@ -31,8 +32,17 @@ public class UserRegistrationServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		HttpSession session = request.getSession();
+		User u = (User) session.getAttribute("userinfo");
+
+		if (u == null) {
+			response.sendRedirect("LoginServlet");
+		}
+		else {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/UserRegistration.jsp");
 		dispatcher.forward(request, response);
+		}
 	}
 
 	/**
@@ -72,7 +82,7 @@ public class UserRegistrationServlet extends HttpServlet {
 			return;
 
 		} else {
-			userdao.insert(login_id, name, birthdate,password);
+			userdao.insert(login_id, name, birthdate, password);
 			response.sendRedirect("UserListServlet");
 		}
 	}

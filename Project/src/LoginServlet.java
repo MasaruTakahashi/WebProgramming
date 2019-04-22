@@ -33,8 +33,18 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
+		HttpSession session = request.getSession();
+		User u = (User) session.getAttribute("userinfo");
+
+		if (u != null) {
+			response.sendRedirect("UserListServlet");
+		}
+
+		else {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Login.jsp");
 		dispatcher.forward(request, response);
+		}
 	}
 
 	/**
@@ -52,7 +62,7 @@ public class LoginServlet extends HttpServlet {
 		User user = userdao.findByLoginInfo(login_id, password);
 
 		if (user == null) {
-			request.setAttribute("errMsg", "ログインに失敗しました。");
+			request.setAttribute("errMsg", "ログインIDまたはパスワードが異なります。");
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Login.jsp");
 			dispatcher.forward(request, response);

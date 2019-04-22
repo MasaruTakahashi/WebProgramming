@@ -14,6 +14,7 @@ public class User implements Serializable{
 	private String update_date;
 
 	public User(String login_id,String name) {
+
 		this.login_id = login_id;
 		this.name = name;
 	}
